@@ -1,1 +1,31 @@
-# wedding-invitation
+# Wedding Invitation Static HTML
+
+Template undangan digital siap upload. Dibuat tanpa framework: HTML, CSS, dan JavaScript.
+
+## Cara Edit Cepat
+
+1. Edit nama mempelai, tanggal, lokasi, dan teks di `index.html`.
+2. Edit konfigurasi tanggal, WhatsApp, gallery, dan calendar di `script.js`.
+3. Replace foto dummy di `assets/photos/`.
+4. Replace musik dummy di `assets/music/dummy-music.mp3` dengan file MP3 asli.
+5. Upload seluruh folder ke Cloudflare Pages, Netlify, GitHub Pages, atau hosting static lain.
+
+## Guest Name via URL
+
+Contoh:
+`https://domainkamu.pages.dev/?to=Haqeem%20Luqman`
+
+## Ganti Tema
+
+Di `style.css` sudah tersedia variable warna dan class contoh:
+- `earth`
+- `dark`
+- `rustic`
+- `clean`
+
+Contoh pakai tema dark:
+`<body class="dark">`
+
+## Catatan Musik Autoplay
+
+Browser biasanya hanya mengizinkan musik mulai setelah user klik tombol. Karena itu musik diputar setelah tombol **Buka Undangan** ditekan.

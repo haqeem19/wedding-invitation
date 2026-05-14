@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Pernikahan - Aisyah & Rayhan</title>
+  <meta name="description" content="Undangan digital pernikahan Aisyah & Rayhan" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="opening" class="opening-screen">
+    <div class="opening-card fade-up">
+      <p class="label">The Wedding of</p>
+      <h1>Aisyah & Rayhan</h1>
+      <p class="guest-text">Kepada Yth.</p>
+      <h2 id="guestName">Bapak/Ibu/Saudara/i</h2>
+      <button id="openInvitation" class="btn primary">Buka Undangan</button>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/music/dummy-music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="musicToggle" class="music-toggle" aria-label="Toggle music">♪</button>
+
+  <main id="content" class="hidden">
+    <section class="hero section">
+      <div class="ornament">❦</div>
+      <p class="label">The Wedding of</p>
+      <h1>Aisyah & Rayhan</h1>
+      <p class="date">Sabtu, 21 Desember 2026</p>
+      <a href="#event" class="btn secondary">Lihat Detail Acara</a>
+    </section>
+
+    <section class="section quote reveal">
+      <p>“Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya.”</p>
+      <span>QS. Ar-Rum: 21</span>
+    </section>
+
+    <section class="section couple reveal">
+      <h2>Assalamu’alaikum Warahmatullahi Wabarakatuh</h2>
+      <p>Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:</p>
+      <div class="couple-grid">
+        <div class="person-card">
+          <img src="assets/photos/bride.svg" alt="Foto mempelai wanita" />
+          <h3>Aisyah Putri</h3>
+          <p>Putri dari Bapak Abdullah & Ibu Aminah</p>
+        </div>
+        <div class="ampersand">&</div>
+        <div class="person-card">
+          <img src="assets/photos/groom.svg" alt="Foto mempelai pria" />
+          <h3>Rayhan Pratama</h3>
+          <p>Putra dari Bapak Hasan & Ibu Fatimah</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section countdown reveal">
+      <h2>Menuju Hari Bahagia</h2>
+      <div class="countdown-box">
+        <div><strong id="days">00</strong><span>Hari</span></div>
+        <div><strong id="hours">00</strong><span>Jam</span></div>
+        <div><strong id="minutes">00</strong><span>Menit</span></div>
+        <div><strong id="seconds">00</strong><span>Detik</span></div>
+      </div>
+    </section>
+
+    <section id="event" class="section event reveal">
+      <h2>Detail Acara</h2>
+      <div class="event-grid">
+        <div class="event-card">
+          <h3>Akad Nikah</h3>
+          <p>Sabtu, 21 Desember 2026</p>
+          <p>08.00 - 10.00 WIB</p>
+          <p>Masjid Al-Ikhlas, Bandung</p>
+        </div>
+        <div class="event-card">
+          <h3>Resepsi</h3>
+          <p>Sabtu, 21 Desember 2026</p>
+          <p>11.00 - 14.00 WIB</p>
+          <p>Gedung Serbaguna Bandung</p>
+        </div>
+      </div>
+      <div class="button-row">
+        <a class="btn primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Gedung+Serbaguna+Bandung">Buka Maps</a>
+        <a id="calendarBtn" class="btn secondary" href="#">Save to Calendar</a>
+      </div>
+    </section>
+
+    <section class="section story reveal">
+      <h2>Love Story</h2>
+      <div class="timeline">
+        <div><strong>2021</strong><p>Pertama kali bertemu dalam sebuah acara keluarga.</p></div>
+        <div><strong>2023</strong><p>Mulai saling mengenal lebih dekat dan membangun komitmen.</p></div>
+        <div><strong>2026</strong><p>InsyaAllah melangkah ke jenjang pernikahan.</p></div>
+      </div>
+    </section>
+
+    <section class="section gallery reveal">
+      <h2>Galeri Foto</h2>
+      <p>Swipe untuk melihat foto. Replace file dummy di folder <code>assets/photos</code>.</p>
+      <div class="slider">
+        <button id="prevSlide" class="slide-btn">‹</button>
+        <img id="sliderImage" src="assets/photos/gallery-1.svg" alt="Galeri foto" />
+        <button id="nextSlide" class="slide-btn">›</button>
+      </div>
+      <div id="dots" class="dots"></div>
+    </section>
+
+    <section class="section rsvp reveal">
+      <h2>RSVP & Ucapan</h2>
+      <p>Konfirmasi kehadiran melalui WhatsApp.</p>
+      <form id="rsvpForm">
+        <input id="nameInput" type="text" placeholder="Nama Anda" required />
+        <select id="attendanceInput" required>
+          <option value="Hadir">Hadir</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+        </select>
+        <textarea id="messageInput" rows="4" placeholder="Ucapan untuk mempelai"></textarea>
+        <button class="btn primary" type="submit">Kirim via WhatsApp</button>
+      </form>
+      <div class="comment-box">
+        <h3>Kolom Komentar</h3>
+        <form id="commentForm">
+          <input id="commentNameInput" type="text" placeholder="Nama Anda" required />
+          <textarea id="commentTextInput" rows="3" placeholder="Tulis komentar atau doa singkat" required></textarea>
+          <button class="btn secondary" type="submit">Tambahkan Komentar</button>
+        </form>
+        <div id="commentList" class="comment-list" aria-live="polite"></div>
+      </div>
+      <div class="qr-box">
+        <img src="assets/photos/qr-rsvp.svg" alt="QR RSVP dummy" />
+        <p>QR RSVP dummy, bisa diganti dengan QR Google Form/WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="section gift reveal">
+      <h2>Amplop Digital</h2>
+      <div class="gift-card">
+        <p>Bank Dummy</p>
+        <h3>1234567890</h3>
+        <p>a.n. Aisyah Putri</p>
+        <button class="btn secondary" onclick="copyText('1234567890')">Copy Nomor Rekening</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Terima kasih atas doa dan restunya.</p>
+      <h2>Aisyah & Rayhan</h2>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
