@@ -66,6 +66,17 @@ body {
   margin-right: auto !important;
 }
 
+#kolom-pertama section[data-id="2e477fee"] > .elementor-container,
+#kolom-pertama section[data-id="7f56d95e"] > .elementor-container {
+  justify-content: center !important;
+}
+
+#kolom-pertama section[data-id="2e477fee"] .elementor-column,
+#kolom-pertama section[data-id="7f56d95e"] .elementor-column {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 #kolom-pertama > .elementor-widget-wrap > .elementor-element,
 #kolom-pertama .elementor-section,
 #kolom-pertama .elementor-section.elementor-section-boxed > .elementor-container,
@@ -83,6 +94,20 @@ body {
 #kolom-pertama .elementor-absolute {
   max-width: 100% !important;
   pointer-events: none;
+}
+
+section[data-id="21990b70"] {
+  display: none !important;
+}
+
+section[data-id="1981e37a"],
+section[data-id="1981e37a"].polish-reveal,
+section[data-id="1981e37a"] .elementor-widget-heading {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  visibility: visible !important;
 }
 
 .audio-box .audio-toggle,
@@ -108,12 +133,6 @@ body {
 }
 
 @media (min-width: 768px) {
-  #cover {
-    display: grid !important;
-    grid-template-columns: minmax(0, 65%) minmax(0, 35%) !important;
-    align-items: start !important;
-  }
-
   #cover > .elementor-container {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -122,28 +141,17 @@ body {
     max-width: 100% !important;
   }
 
-  #cover > .elementor-container:nth-of-type(1) {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-  }
-
-  #cover > .elementor-container:nth-of-type(2) {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    justify-content: center !important;
-  }
-
   #cover .elementor-element-48d219d8 {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    flex: 0 0 65% !important;
+    width: 65% !important;
+    max-width: 65% !important;
     min-width: 0 !important;
   }
 
   #kolom-pertama {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    flex: 0 0 35% !important;
+    width: 35% !important;
+    max-width: 35% !important;
   }
 }
 

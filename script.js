@@ -4,6 +4,7 @@
   var CONFIG = {
     youtubeVideoId: "ZeFpigRaXbI",
     youtubeStart: 48,
+    defaultGuestName: "Bapak/Ibu",
     guestParams: ["to", "dear", "kepada", "nama", "name", "tamu"],
     commentsStorageKey: "heniRijalWeddingComments",
     galleryPhotos: [
@@ -38,7 +39,7 @@
 
     var textarea = document.createElement("textarea");
     textarea.innerHTML = decoded;
-    return textarea.value.trim();
+    return textarea.value.replace(/\s+/g, " ").trim();
   }
 
   function getGuestName() {
@@ -49,7 +50,7 @@
       if (rawName && rawName.trim()) return decodeGuestName(rawName);
     }
 
-    return "Nama Tamu";
+    return CONFIG.defaultGuestName;
   }
 
   function applyGuestName() {
@@ -63,13 +64,13 @@
       if (element.children.length > 0) return;
 
       var text = element.textContent.trim();
-      if (text === "Nama Tamu" || text === "Tamu Undangan") {
+      if (text === "Nama Tamu" || text === "Tamu Undangan" || text === CONFIG.defaultGuestName) {
         element.textContent = guestName;
       }
     });
 
     var author = document.querySelector("#author");
-    if (author && guestName !== "Nama Tamu") {
+    if (author && guestName !== CONFIG.defaultGuestName) {
       author.removeAttribute("readonly");
       author.value = guestName;
     }
@@ -491,7 +492,7 @@
     var attendanceInput = document.getElementById("localCommentAttendance");
     var guestName = getGuestName();
 
-    if (nameInput && guestName !== "Nama Tamu" && !nameInput.value) {
+    if (nameInput && guestName !== CONFIG.defaultGuestName && !nameInput.value) {
       nameInput.value = guestName;
     }
 
@@ -556,6 +557,11 @@
     window.setInterval(updateCountdown, 1000);
   }
 
+  function removeAkadSection() {
+    var akadSection = document.querySelector('section[data-id="21990b70"]');
+    if (akadSection) akadSection.remove();
+  }
+
   function setupSectionTransitions() {
     var animatedElements = document.querySelectorAll([
       "#cover .elementor-widget-heading",
@@ -566,7 +572,6 @@
       "#cover .elementor-widget-google_maps",
       "#cover .elementor-widget-icon",
       "#cover .elementor-widget-divider",
-      "#cover .elementor-inner-section",
       ".local-gallery-item",
     ].join(","));
 
@@ -601,6 +606,7 @@
   }
 
   function boot() {
+    removeAkadSection();
     setupLocalGallery();
     fixAssetUrls();
     revealElementorContent();
