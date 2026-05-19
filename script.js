@@ -556,11 +556,56 @@
     window.setInterval(updateCountdown, 1000);
   }
 
+  function setupSectionTransitions() {
+    var animatedElements = document.querySelectorAll([
+      "#cover .elementor-widget-heading",
+      "#cover .elementor-widget-image",
+      "#cover .elementor-widget-button",
+      "#cover .elementor-widget-countdown",
+      "#cover .elementor-widget-gallery",
+      "#cover .elementor-widget-google_maps",
+      "#cover .elementor-widget-icon",
+      "#cover .elementor-widget-divider",
+      "#cover .elementor-inner-section",
+      ".local-gallery-item",
+    ].join(","));
+
+    if (!animatedElements.length) return;
+
+    animatedElements.forEach(function (element, index) {
+      element.classList.add("polish-reveal");
+      element.style.setProperty("--reveal-delay", Math.min(index % 8, 7) * 45 + "ms");
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      animatedElements.forEach(function (element) {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      rootMargin: "0px 0px -8% 0px",
+      threshold: 0.12,
+    });
+
+    animatedElements.forEach(function (element) {
+      observer.observe(element);
+    });
+  }
+
   function boot() {
     setupLocalGallery();
     fixAssetUrls();
     revealElementorContent();
     applyGuestName();
+    setupSectionTransitions();
     setupAudioButtons();
     setupBlockingModal();
     setupGiftToggle();

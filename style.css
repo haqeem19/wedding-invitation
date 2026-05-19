@@ -1,4 +1,4 @@
-/* Local functional patch only. Visual styling stays from the WordPress reference CSS. */
+/* Local functional patch only. Visual styling stays from the exported template CSS. */
 html,
 body {
   margin: 0;
@@ -6,6 +6,10 @@ body {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 *,
@@ -39,12 +43,15 @@ body.invitation-locked {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 700ms ease, visibility 700ms ease;
+  transform: scale(1.015);
+  filter: blur(8px);
+  transition: opacity 820ms ease, visibility 820ms ease, transform 820ms ease, filter 820ms ease;
 }
 
 #tombol-buka .elementor-button.is-opening {
-  transform: scale(.96);
-  transition: transform 420ms ease;
+  transform: translateY(2px) scale(.96);
+  transition: transform 420ms ease, filter 420ms ease;
+  filter: brightness(.96);
 }
 
 .audio-box {
@@ -72,9 +79,19 @@ body.invitation-locked {
   border: 0;
   border-radius: 50%;
   color: #fff;
-  background: #8b6445;
-  box-shadow: 0 8px 22px rgb(0 0 0 / .22);
+  background: rgb(84 93 102);
+  box-shadow: none;
   cursor: pointer;
+  transition: transform 180ms ease, filter 180ms ease, background-color 180ms ease;
+}
+
+.audio-toggle:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.audio-toggle:active {
+  transform: translateY(0) scale(.96);
 }
 
 .audio-toggle svg {
@@ -83,9 +100,83 @@ body.invitation-locked {
   fill: currentColor;
 }
 
+.audio-toggle path {
+  fill: currentColor;
+}
+
 .audio-toggle:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 3px;
+}
+
+.elementor-button,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.elementor-button,
+.local-gallery-item,
+.elementor-widget-image img {
+  will-change: transform;
+}
+
+.elementor-button {
+  transition: transform 220ms ease, filter 220ms ease, box-shadow 220ms ease;
+}
+
+.elementor-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.elementor-button:active {
+  transform: translateY(0) scale(.98);
+}
+
+.polish-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  filter: blur(3px);
+  transition:
+    opacity 720ms cubic-bezier(.2, .8, .2, 1),
+    transform 720ms cubic-bezier(.2, .8, .2, 1),
+    filter 720ms cubic-bezier(.2, .8, .2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.polish-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.elementor-widget-image img {
+  transition: transform 520ms ease, filter 520ms ease;
+}
+
+.elementor-widget-image:hover img {
+  transform: scale(1.018);
+  filter: saturate(1.03) contrast(1.02);
+}
+
+.elementor-countdown-item {
+  transition: transform 220ms ease, background-color 220ms ease;
+}
+
+.elementor-countdown-item:hover {
+  transform: translateY(-2px);
+}
+
+[style*="Great Vibes"],
+.elementor-heading-title {
+  font-synthesis: none;
+}
+
+.elementor-81427 .elementor-element.elementor-element-359af854 .elementor-heading-title,
+.elementor-81427 .elementor-element.elementor-element-57796003 .elementor-heading-title,
+.elementor-81427 .elementor-element.elementor-element-65a6be6 .elementor-heading-title {
+  font-family: "Great Vibes", "Brush Script MT", cursive !important;
 }
 
 #cover {
@@ -139,6 +230,8 @@ body.invitation-locked {
   overflow: hidden;
   border-radius: 6px;
   background: rgba(255, 255, 255, .08);
+  box-shadow: 0 10px 30px rgb(0 0 0 / .12);
+  transition: transform 240ms ease, box-shadow 240ms ease;
 }
 
 .elementor-widget-gallery .local-gallery-item .e-gallery-image {
@@ -152,6 +245,11 @@ body.invitation-locked {
 
 .elementor-widget-gallery .local-gallery-item:hover .e-gallery-image {
   transform: scale(1.04);
+}
+
+.elementor-widget-gallery .local-gallery-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 38px rgb(0 0 0 / .18);
 }
 
 .elementor-widget-gallery .local-gallery-item .elementor-gallery-item__overlay {
@@ -211,6 +309,27 @@ body.invitation-locked {
 @media (max-width: 560px) {
   .elementor-widget-gallery .local-gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+
+  .polish-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 

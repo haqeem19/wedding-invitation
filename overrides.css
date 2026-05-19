@@ -37,6 +37,35 @@ body {
   overflow-x: clip !important;
 }
 
+#kolom-pertama {
+  text-align: center !important;
+}
+
+#kolom-pertama > .elementor-widget-wrap {
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#kolom-pertama > .elementor-widget-wrap > .elementor-element,
+#kolom-pertama .elementor-widget-container,
+#kolom-pertama .elementor-section > .elementor-container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#kolom-pertama .elementor-widget-image,
+#kolom-pertama .elementor-widget-heading,
+#kolom-pertama .elementor-widget-text-editor {
+  text-align: center !important;
+}
+
+#kolom-pertama .elementor-widget-image img {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 #kolom-pertama > .elementor-widget-wrap > .elementor-element,
 #kolom-pertama .elementor-section,
 #kolom-pertama .elementor-section.elementor-section-boxed > .elementor-container,
@@ -56,24 +85,65 @@ body {
   pointer-events: none;
 }
 
+.audio-box .audio-toggle,
+#audio-container .audio-toggle,
+#mute-sound,
+#unmute-sound {
+  color: #fff !important;
+  background: rgb(84 93 102) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0;
+}
+
+.audio-box .audio-toggle svg,
+.audio-box .audio-toggle path,
+#mute-sound svg,
+#mute-sound path,
+#unmute-sound svg,
+#unmute-sound path {
+  color: #fff !important;
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
 @media (min-width: 768px) {
+  #cover {
+    display: grid !important;
+    grid-template-columns: minmax(0, 65%) minmax(0, 35%) !important;
+    align-items: start !important;
+  }
+
   #cover > .elementor-container {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: flex-start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #cover > .elementor-container:nth-of-type(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  #cover > .elementor-container:nth-of-type(2) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-content: center !important;
   }
 
   #cover .elementor-element-48d219d8 {
-    flex: 0 0 65% !important;
-    width: 65% !important;
-    max-width: 65% !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
     min-width: 0 !important;
   }
 
   #kolom-pertama {
-    flex: 0 0 35% !important;
-    width: 35% !important;
-    max-width: 35% !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
