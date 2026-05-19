@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wedding Of Heni & Rijal</title>
+  <meta name="description" content="Undangan digital pernikahan Heni & Rijal" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="invitation-locked">
+  <div id="opening" class="opening-screen">
+    <div class="opening-card fade-up">
+      <p class="label">Dear :</p>
+      <h2 id="guestName">Nama Tamu</h2>
+      <p>Please be a part of our happiest moment</p>
+      <div class="monogram opening-monogram"><span>H</span><span>R</span></div>
+      <p class="label">The Wedding of</p>
+      <h1>Heni & Rijal</h1>
+      <button id="openInvitation" class="open-letter-btn" type="button" aria-label="Open Invitation">
+        <svg class="letter-icon" viewBox="0 0 64 48" aria-hidden="true">
+          <rect class="envelope-body" x="6" y="12" width="52" height="30" rx="4" />
+          <path class="envelope-flap" d="M8 14 L32 31 L56 14" />
+          <path class="envelope-fold" d="M8 40 L26 26 M56 40 L38 26" />
+        </svg>
+        <span>Open Invitation</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="youtube-audio" data-video="https://youtu.be/ZeFpigRaXbI" aria-hidden="true"></div>
+  <button id="musicToggle" class="music-toggle paused" aria-label="Toggle music">♪</button>
+
+  <main id="content" class="hidden">
+    <section class="hero section">
+      <img class="hero-photo reveal" src="assets/photos/gallery-1.svg" alt="Foto Heni dan Rijal" />
+      <p class="label reveal">Our Wedding Invitation</p>
+      <h1 class="reveal">Heni & Rijal</h1>
+      <p class="date reveal">Minggu, 7 Juni 2026</p>
+      <a href="#event" class="btn secondary reveal">Lihat Detail Acara</a>
+    </section>
+
+    <section class="section quote reveal">
+      <div class="monogram"><span>H</span><span>R</span></div>
+      <p>"Dan di antara tanda-tanda kebesaran-Nya adalah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya."</p>
+      <span>Ar-Ruum ayat 21</span>
+    </section>
+
+    <section class="section couple reveal">
+      <h2>Assalamualaikum Wr. Wb.</h2>
+      <p>Dengan memohon rahmat dan ridho Allah Subhanahu Wa Ta'ala, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri resepsi pernikahan kami.</p>
+      <div class="couple-grid">
+        <div class="person-card reveal">
+          <img src="assets/photos/bride.svg" alt="Foto mempelai wanita" />
+          <p class="label">The Bride</p>
+          <h3>Heni Tri<br>Wardiani S.Tr.Kes</h3>
+          <p>Putri ketiga dari Bapak Peltu Wardi Suwardi (Purn TNI AD) dan Ibu Ani Herni</p>
+          <a href="https://www.instagram.com/henitri_11" target="_blank" rel="noreferrer">@henitri_11</a>
+        </div>
+        <div class="ampersand">&</div>
+        <div class="person-card reveal">
+          <img src="assets/photos/groom.svg" alt="Foto mempelai pria" />
+          <p class="label">The Groom</p>
+          <h3>Muhamad<br>Rijal S.Kep.,Ners</h3>
+          <p>Putra pertama dari Bapak Aiptu Asep Setiawan, S.H dan Ibu Juniah, S.Kep.,Ners</p>
+          <a href="https://www.instagram.com/muhamad_rijal16" target="_blank" rel="noreferrer">@muhamad_rijal16</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section countdown reveal">
+      <h2>Count The Date</h2>
+      <div class="countdown-box">
+        <div><strong id="days">00</strong><span>Days</span></div>
+        <div><strong id="hours">00</strong><span>Hours</span></div>
+        <div><strong id="minutes">00</strong><span>Minutes</span></div>
+        <div><strong id="seconds">00</strong><span>Seconds</span></div>
+      </div>
+      <a id="calendarBtn" class="btn secondary" href="#">Simpan di Kalender</a>
+    </section>
+
+    <section id="event" class="section event reveal">
+      <p class="label">Wedding Event</p>
+      <h2>Detail Acara</h2>
+      <div class="event-grid">
+        <div class="event-card">
+          <h3>Akad Nikah</h3>
+          <p>Minggu, 7 Juni 2026</p>
+          <p>Pukul: 09.00 WIB</p>
+          <p>Kediaman Mempelai Wanita, Kp. Cisaga RT/RW 018/006, Desa Cisaga, Kec. Cibogo, Kab. Subang, Prov. Jawa Barat</p>
+        </div>
+        <div class="event-card">
+          <h3>Resepsi</h3>
+          <p>Minggu, 7 Juni 2026</p>
+          <p>Pukul: 11.00 WIB s.d Selesai</p>
+          <p>Kediaman Mempelai Wanita, Kp. Cisaga RT 018 RW 006, Desa Cisaga, Kec. Cibogo, Kab. Subang, Prov. Jawa Barat</p>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe title="Lokasi acara Heni dan Rijal" src="https://maps.google.com/maps?q=6%C2%B032%2719.5%22S%20107%C2%B047%2714.6%22E&t=m&z=16&output=embed&iwloc=near" loading="lazy"></iframe>
+      </div>
+      <div class="button-row">
+        <a class="btn primary" target="_blank" rel="noreferrer" href="https://maps.app.goo.gl/m1bCqVLVJ1L3LMAT6">Google Maps</a>
+      </div>
+    </section>
+
+    <section class="section story reveal">
+      <h2>Love Story</h2>
+      <div class="timeline">
+        <div><strong>Awal Bertemu</strong><p>Di dunia seluas ini, kami percaya tidak ada pertemuan yang benar-benar kebetulan. Kami bertemu pertama kalinya pada tahun 2021 saat sama-sama menempuh pendidikan di kota Cimahi.</p></div>
+        <div><strong>Menjalin Hubungan</strong><p>Seiring berjalannya waktu, kami menjalani hubungan selama 5 tahun dan pernah merasakan LDR hampir 2 tahun. Pada akhir 2024, kami dan keluarga mulai merencanakan pernikahan.</p></div>
+        <div><strong>Pernikahan</strong><p>Pada awal tahun 2026, keluarga kami bertemu kembali untuk menentukan hari baik pernikahan. Kami memohon doa agar langkah ini dimudahkan hingga hari kami mengikrarkan janji suci.</p></div>
+      </div>
+    </section>
+
+    <section class="section gallery reveal">
+      <h2>Our Gallery</h2>
+      <div class="slider">
+        <button id="prevSlide" class="slide-btn" aria-label="Foto sebelumnya">‹</button>
+        <img id="sliderImage" src="assets/photos/gallery-1.svg" alt="Galeri foto" />
+        <button id="nextSlide" class="slide-btn" aria-label="Foto berikutnya">›</button>
+      </div>
+      <div id="dots" class="dots"></div>
+    </section>
+
+    <section class="section gift reveal">
+      <h2>Our Gift</h2>
+      <p>Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi gift.</p>
+      <div class="gift-card">
+        <p>BNI</p>
+        <h3>1912812614</h3>
+        <p>a.n. Heni Tri Wardiani</p>
+        <button class="btn secondary" onclick="copyText('1912812614')">Salin Nomor Rekening</button>
+      </div>
+      <div class="gift-card address-card">
+        <p>Heni & Rijal</p>
+        <h3>Alamat Kirim Gift</h3>
+        <p>Kp. Cisaga RT 018 RW 006, Desa Cisaga, Kec. Cibogo, Kab. Subang, Prov. Jawa Barat</p>
+        <button class="btn secondary" onclick="copyText('Kp. Cisaga RT 018 RW 006, Desa Cisaga, Kec. Cibogo, Kab. Subang, Prov. Jawa Barat')">Salin Alamat</button>
+      </div>
+    </section>
+
+    <section class="section rsvp reveal">
+      <h2>Wedding Wish</h2>
+      <p>Konfirmasi kehadiran dan kirim ucapan melalui WhatsApp.</p>
+      <form id="rsvpForm">
+        <input id="nameInput" type="text" placeholder="Nama Anda" required />
+        <select id="attendanceInput" required>
+          <option value="Hadir">Hadir</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+          <option value="Masih Ragu">Masih Ragu</option>
+        </select>
+        <textarea id="messageInput" rows="4" placeholder="Ucapan untuk mempelai"></textarea>
+        <button class="btn primary" type="submit">Konfirmasi Kehadiran</button>
+      </form>
+      <div class="comment-box">
+        <h3>Ucapan</h3>
+        <form id="commentForm">
+          <input id="commentNameInput" type="text" placeholder="Nama Anda" required />
+          <textarea id="commentTextInput" rows="3" placeholder="Tulis komentar atau doa singkat" required></textarea>
+          <button class="btn secondary" type="submit">Tambahkan Ucapan</button>
+        </form>
+        <div id="commentList" class="comment-list" aria-live="polite"></div>
+      </div>
+      <div class="qr-box">
+        <img src="assets/photos/qr-rsvp.svg" alt="QR RSVP" />
+        <p>Link RSVP referensi: <a href="http://wa.me/+6285295555565" target="_blank" rel="noreferrer">wa.me/+6285295555565</a></p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <img src="assets/photos/gallery-2.svg" alt="Foto penutup Heni dan Rijal" />
+      <p>Terima Kasih</p>
+      <h2>Heni & Rijal</h2>
+      <p>Minggu, 7 Juni 2026</p>
+    </footer>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
+</body>
+</html>

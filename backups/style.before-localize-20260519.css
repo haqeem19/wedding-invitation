@@ -1,0 +1,25 @@
+/* Local functional patch only. Visual styling stays from the WordPress reference CSS. */
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body.invitation-locked {
+  height: 100vh !important;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+#header.is-opened {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 700ms ease, visibility 700ms ease;
+}
+
+#tombol-buka .elementor-button.is-opening {
+  transform: scale(.96);
+  transition: transform 420ms ease;
+}
