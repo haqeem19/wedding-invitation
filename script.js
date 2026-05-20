@@ -207,6 +207,9 @@
       events: {
         onReady: function () {
           youtubeReady = true;
+          if (typeof youtubePlayer.setVolume === "function") {
+            youtubePlayer.setVolume(100);
+          }
           if (shouldPlayWhenReady) playAudio();
         },
         onStateChange: function (event) {
