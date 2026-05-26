@@ -2,8 +2,8 @@
   "use strict";
 
   var CONFIG = {
-    youtubeVideoId: "dHD_EuuX1hc",
-    youtubeStart: 10,
+    youtubeVideoId: "XCasOuavjLc",
+    youtubeStart: 0,
     defaultGuestName: "Bapak/Ibu",
     guestParams: ["to", "dear", "kepada", "nama", "name", "tamu"],
     commentsStorageKey: "heniRijalWeddingComments",
@@ -120,6 +120,7 @@
 
     var activeIndex = 0;
     var touchStartX = 0;
+    var touchStartY = 0;
     var autoSlideTimer = null;
 
     track.innerHTML = "";
@@ -189,14 +190,21 @@
     }
 
     track.addEventListener("touchstart", function (event) {
-      touchStartX = event.touches && event.touches.length ? event.touches[0].clientX : 0;
+      if (!event.touches || !event.touches.length) return;
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
     }, { passive: true });
 
     track.addEventListener("touchend", function (event) {
-      var touchEndX = event.changedTouches && event.changedTouches.length ? event.changedTouches[0].clientX : 0;
-      var distance = touchEndX - touchStartX;
-      if (Math.abs(distance) < 44) return;
-      showSlide(activeIndex + (distance < 0 ? 1 : -1));
+      if (!event.changedTouches || !event.changedTouches.length) return;
+
+      var distanceX = event.changedTouches[0].clientX - touchStartX;
+      var distanceY = event.changedTouches[0].clientY - touchStartY;
+      var isHorizontalSwipe = Math.abs(distanceX) > 44 && Math.abs(distanceX) > Math.abs(distanceY) * 1.25;
+
+      if (!isHorizontalSwipe) return;
+
+      showSlide(activeIndex + (distanceX < 0 ? 1 : -1));
       restartAutoSlide();
     }, { passive: true });
 
@@ -370,7 +378,7 @@
       playAudio();
 
       var gallery = document.getElementById("gallery-experience");
-      if (gallery) gallery.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (gallery) gallery.scrollIntoView({ behavior: "auto", block: "start" });
     }, 420);
   }
 
