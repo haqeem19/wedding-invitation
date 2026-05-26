@@ -8,14 +8,14 @@
     guestParams: ["to", "dear", "kepada", "nama", "name", "tamu"],
     commentsStorageKey: "heniRijalWeddingComments",
     galleryPhotos: [
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.21.jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22.jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.21.jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (1).jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (2).jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23.jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (1).jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (2).jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.24.jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23.jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (1).jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (2).jpeg",
     ],
   };
 
@@ -111,104 +111,24 @@
   }
 
   function setupLocalGallery() {
-    var track = document.querySelector("[data-gallery-track]");
-    var current = document.querySelector("[data-gallery-current]");
-    var total = document.querySelector("[data-gallery-total]");
-    var prev = document.querySelector("[data-gallery-prev]");
-    var next = document.querySelector("[data-gallery-next]");
-    if (!track || !CONFIG.galleryPhotos.length) return;
+    var grid = document.querySelector("[data-gallery-grid]");
+    if (!grid || !CONFIG.galleryPhotos.length) return;
 
-    var activeIndex = 0;
-    var touchStartX = 0;
-    var touchStartY = 0;
-    var autoSlideTimer = null;
-
-    track.innerHTML = "";
+    grid.innerHTML = "";
     CONFIG.galleryPhotos.forEach(function (photo, index) {
-      var slide = document.createElement("article");
-      var frame = document.createElement("div");
+      var item = document.createElement("figure");
       var image = document.createElement("img");
 
-      slide.className = "gallery-slide";
-      if (index === 0) slide.classList.add("is-active");
-      slide.setAttribute("aria-hidden", index === 0 ? "false" : "true");
-
-      frame.className = "gallery-slide__frame";
+      item.className = "editorial-gallery__item";
+      item.style.setProperty("--reveal-delay", Math.min(index, 7) * 55 + "ms");
       image.src = photo;
       image.alt = "Gallery Heni dan Rijal " + (index + 1);
-      image.loading = index === 0 ? "eager" : "lazy";
+      image.loading = index < 3 ? "eager" : "lazy";
       image.decoding = "async";
 
-      frame.appendChild(image);
-      slide.appendChild(frame);
-      track.appendChild(slide);
+      item.appendChild(image);
+      grid.appendChild(item);
     });
-
-    if (total) total.textContent = padCountdown(CONFIG.galleryPhotos.length);
-
-    function showSlide(index) {
-      var slides = track.querySelectorAll(".gallery-slide");
-      if (!slides.length) return;
-
-      activeIndex = (index + slides.length) % slides.length;
-      slides.forEach(function (slide, slideIndex) {
-        var isActive = slideIndex === activeIndex;
-        slide.classList.toggle("is-active", isActive);
-        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
-      });
-
-      if (current) current.textContent = padCountdown(activeIndex + 1);
-    }
-
-    function startAutoSlide() {
-      if (autoSlideTimer || CONFIG.galleryPhotos.length < 2) return;
-      autoSlideTimer = window.setInterval(function () {
-        showSlide(activeIndex + 1);
-      }, 2000);
-    }
-
-    function restartAutoSlide() {
-      if (autoSlideTimer) {
-        window.clearInterval(autoSlideTimer);
-        autoSlideTimer = null;
-      }
-      startAutoSlide();
-    }
-
-    if (prev) {
-      prev.addEventListener("click", function () {
-        showSlide(activeIndex - 1);
-        restartAutoSlide();
-      });
-    }
-
-    if (next) {
-      next.addEventListener("click", function () {
-        showSlide(activeIndex + 1);
-        restartAutoSlide();
-      });
-    }
-
-    track.addEventListener("touchstart", function (event) {
-      if (!event.touches || !event.touches.length) return;
-      touchStartX = event.touches[0].clientX;
-      touchStartY = event.touches[0].clientY;
-    }, { passive: true });
-
-    track.addEventListener("touchend", function (event) {
-      if (!event.changedTouches || !event.changedTouches.length) return;
-
-      var distanceX = event.changedTouches[0].clientX - touchStartX;
-      var distanceY = event.changedTouches[0].clientY - touchStartY;
-      var isHorizontalSwipe = Math.abs(distanceX) > 44 && Math.abs(distanceX) > Math.abs(distanceY) * 1.25;
-
-      if (!isHorizontalSwipe) return;
-
-      showSlide(activeIndex + (distanceX < 0 ? 1 : -1));
-      restartAutoSlide();
-    }, { passive: true });
-
-    startAutoSlide();
   }
 
   function ensureYouTubeMount() {
@@ -631,7 +551,6 @@
   function setupSectionTransitions() {
     var animatedElements = document.querySelectorAll([
       ".reveal",
-      ".gallery-slide__frame",
       ".event-card",
       ".couple-card",
       ".story-list article",
