@@ -2,8 +2,8 @@
   "use strict";
 
   var CONFIG = {
-    youtubeVideoId: "ZeFpigRaXbI",
-    youtubeStart: 48,
+    youtubeVideoId: "dHD_EuuX1hc",
+    youtubeStart: 10,
     defaultGuestName: "Bapak/Ibu",
     guestParams: ["to", "dear", "kepada", "nama", "name", "tamu"],
     commentsStorageKey: "heniRijalWeddingComments",
@@ -111,36 +111,96 @@
   }
 
   function setupLocalGallery() {
-    var container = document.querySelector(".elementor-widget-gallery .elementor-gallery__container");
-    if (!container || !CONFIG.galleryPhotos.length) return;
+    var track = document.querySelector("[data-gallery-track]");
+    var current = document.querySelector("[data-gallery-current]");
+    var total = document.querySelector("[data-gallery-total]");
+    var prev = document.querySelector("[data-gallery-prev]");
+    var next = document.querySelector("[data-gallery-next]");
+    if (!track || !CONFIG.galleryPhotos.length) return;
 
-    container.classList.add("local-gallery-grid");
-    container.innerHTML = "";
+    var activeIndex = 0;
+    var touchStartX = 0;
+    var autoSlideTimer = null;
 
+    track.innerHTML = "";
     CONFIG.galleryPhotos.forEach(function (photo, index) {
-      var encodedPhoto = encodeURI(photo);
-      var item = document.createElement("a");
-      var image = document.createElement("div");
-      var overlay = document.createElement("div");
+      var slide = document.createElement("article");
+      var frame = document.createElement("div");
+      var image = document.createElement("img");
 
-      item.className = "e-gallery-item elementor-gallery-item elementor-animated-content local-gallery-item";
-      item.href = encodedPhoto;
-      item.setAttribute("data-elementor-open-lightbox", "yes");
-      item.setAttribute("data-elementor-lightbox-slideshow", "local-gallery");
-      item.setAttribute("data-elementor-lightbox-title", "Gallery " + (index + 1));
+      slide.className = "gallery-slide";
+      if (index === 0) slide.classList.add("is-active");
+      slide.setAttribute("aria-hidden", index === 0 ? "false" : "true");
 
-      image.className = "e-gallery-image elementor-gallery-item__image";
-      image.setAttribute("data-thumbnail", photo);
-      image.setAttribute("aria-label", "Gallery " + (index + 1));
-      image.setAttribute("role", "img");
-      image.style.backgroundImage = 'url("' + photo + '")';
+      frame.className = "gallery-slide__frame";
+      image.src = photo;
+      image.alt = "Gallery Heni dan Rijal " + (index + 1);
+      image.loading = index === 0 ? "eager" : "lazy";
+      image.decoding = "async";
 
-      overlay.className = "elementor-gallery-item__overlay";
-
-      item.appendChild(image);
-      item.appendChild(overlay);
-      container.appendChild(item);
+      frame.appendChild(image);
+      slide.appendChild(frame);
+      track.appendChild(slide);
     });
+
+    if (total) total.textContent = padCountdown(CONFIG.galleryPhotos.length);
+
+    function showSlide(index) {
+      var slides = track.querySelectorAll(".gallery-slide");
+      if (!slides.length) return;
+
+      activeIndex = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, slideIndex) {
+        var isActive = slideIndex === activeIndex;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      if (current) current.textContent = padCountdown(activeIndex + 1);
+    }
+
+    function startAutoSlide() {
+      if (autoSlideTimer || CONFIG.galleryPhotos.length < 2) return;
+      autoSlideTimer = window.setInterval(function () {
+        showSlide(activeIndex + 1);
+      }, 2000);
+    }
+
+    function restartAutoSlide() {
+      if (autoSlideTimer) {
+        window.clearInterval(autoSlideTimer);
+        autoSlideTimer = null;
+      }
+      startAutoSlide();
+    }
+
+    if (prev) {
+      prev.addEventListener("click", function () {
+        showSlide(activeIndex - 1);
+        restartAutoSlide();
+      });
+    }
+
+    if (next) {
+      next.addEventListener("click", function () {
+        showSlide(activeIndex + 1);
+        restartAutoSlide();
+      });
+    }
+
+    track.addEventListener("touchstart", function (event) {
+      touchStartX = event.touches && event.touches.length ? event.touches[0].clientX : 0;
+    }, { passive: true });
+
+    track.addEventListener("touchend", function (event) {
+      var touchEndX = event.changedTouches && event.changedTouches.length ? event.changedTouches[0].clientX : 0;
+      var distance = touchEndX - touchStartX;
+      if (Math.abs(distance) < 44) return;
+      showSlide(activeIndex + (distance < 0 ? 1 : -1));
+      restartAutoSlide();
+    }, { passive: true });
+
+    startAutoSlide();
   }
 
   function ensureYouTubeMount() {
@@ -309,8 +369,8 @@
 
       playAudio();
 
-      var cover = document.getElementById("cover");
-      if (cover) cover.scrollIntoView({ behavior: "smooth", block: "start" });
+      var gallery = document.getElementById("gallery-experience");
+      if (gallery) gallery.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 420);
   }
 
@@ -339,7 +399,7 @@
     button.addEventListener("click", function (event) {
       event.preventDefault();
       var shouldShow = gift.style.display === "none" || !gift.style.display;
-      gift.style.display = shouldShow ? "block" : "none";
+      gift.style.display = shouldShow ? "grid" : "none";
       if (shouldShow) gift.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }
@@ -560,22 +620,17 @@
     window.setInterval(updateCountdown, 1000);
   }
 
-  function removeAkadSection() {
-    var akadSection = document.querySelector('section[data-id="21990b70"]');
-    if (akadSection) akadSection.remove();
-  }
-
   function setupSectionTransitions() {
     var animatedElements = document.querySelectorAll([
-      "#cover .elementor-widget-heading",
-      "#cover .elementor-widget-image",
-      "#cover .elementor-widget-button",
-      "#cover .elementor-widget-countdown",
-      "#cover .elementor-widget-gallery",
-      "#cover .elementor-widget-google_maps",
-      "#cover .elementor-widget-icon",
-      "#cover .elementor-widget-divider",
-      ".local-gallery-item",
+      ".reveal",
+      ".gallery-slide__frame",
+      ".event-card",
+      ".couple-card",
+      ".story-list article",
+      ".map-panel",
+      ".elementor-countdown-item",
+      ".bank-card",
+      ".address-card",
     ].join(","));
 
     if (!animatedElements.length) return;
@@ -609,7 +664,6 @@
   }
 
   function boot() {
-    removeAkadSection();
     setupLocalGallery();
     fixAssetUrls();
     revealElementorContent();
