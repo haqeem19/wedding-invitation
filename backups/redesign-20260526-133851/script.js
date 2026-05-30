@@ -8,14 +8,14 @@
     guestParams: ["to", "dear", "kepada", "nama", "name", "tamu"],
     commentsStorageKey: "heniRijalWeddingComments",
     galleryPhotos: [
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22.jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.21.jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22.jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (1).jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (2).jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.24.jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (2).jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23.jpeg",
       "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (1).jpeg",
-      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.22 (2).jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.23 (2).jpeg",
+      "assets/photos/WhatsApp Image 2026-05-19 at 10.09.24.jpeg",
     ],
   };
 
@@ -111,24 +111,148 @@
   }
 
   function setupLocalGallery() {
-    var grid = document.querySelector("[data-gallery-grid]");
-    if (!grid || !CONFIG.galleryPhotos.length) return;
+    var track = document.querySelector("[data-gallery-track]");
+    var current = document.querySelector("[data-gallery-current]");
+    var total = document.querySelector("[data-gallery-total]");
+    var prev = document.querySelector("[data-gallery-prev]");
+    var next = document.querySelector("[data-gallery-next]");
+    var gallery = track.closest("[data-gallery]") || track;
+    if (!track || !CONFIG.galleryPhotos.length) return;
 
-    grid.innerHTML = "";
+    var activeIndex = 0;
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var autoSlideTimer = null;
+    var resumeAutoSlideTimer = null;
+    var galleryInView = true;
+
+    track.innerHTML = "";
     CONFIG.galleryPhotos.forEach(function (photo, index) {
-      var item = document.createElement("figure");
+      var slide = document.createElement("article");
+      var frame = document.createElement("div");
       var image = document.createElement("img");
 
-      item.className = "editorial-gallery__item";
-      item.style.setProperty("--reveal-delay", Math.min(index, 7) * 55 + "ms");
+      slide.className = "gallery-slide";
+      if (index === 0) slide.classList.add("is-active");
+      slide.setAttribute("aria-hidden", index === 0 ? "false" : "true");
+
+      frame.className = "gallery-slide__frame";
       image.src = photo;
       image.alt = "Gallery Heni dan Rijal " + (index + 1);
-      image.loading = index < 3 ? "eager" : "lazy";
+      image.loading = index === 0 ? "eager" : "lazy";
       image.decoding = "async";
 
-      item.appendChild(image);
-      grid.appendChild(item);
+      frame.appendChild(image);
+      slide.appendChild(frame);
+      track.appendChild(slide);
     });
+
+    if (total) total.textContent = padCountdown(CONFIG.galleryPhotos.length);
+
+    function showSlide(index) {
+      var slides = track.querySelectorAll(".gallery-slide");
+      if (!slides.length) return;
+
+      activeIndex = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, slideIndex) {
+        var isActive = slideIndex === activeIndex;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      if (current) current.textContent = padCountdown(activeIndex + 1);
+    }
+
+    function startAutoSlide() {
+      if (autoSlideTimer || !galleryInView || CONFIG.galleryPhotos.length < 2) return;
+      autoSlideTimer = window.setInterval(function () {
+        showSlide(activeIndex + 1);
+      }, 2000);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideTimer) {
+        window.clearInterval(autoSlideTimer);
+        autoSlideTimer = null;
+      }
+    }
+
+    function restartAutoSlide(delay) {
+      stopAutoSlide();
+
+      if (resumeAutoSlideTimer) window.clearTimeout(resumeAutoSlideTimer);
+
+      if (delay) {
+        resumeAutoSlideTimer = window.setTimeout(function () {
+          resumeAutoSlideTimer = null;
+          startAutoSlide();
+        }, delay);
+        return;
+      }
+
+      startAutoSlide();
+    }
+
+    if ("IntersectionObserver" in window) {
+      var galleryObserver = new IntersectionObserver(function (entries) {
+        galleryInView = entries.some(function (entry) {
+          return entry.isIntersecting;
+        });
+
+        if (galleryInView) startAutoSlide();
+        else stopAutoSlide();
+      }, { threshold: 0.2 });
+
+      galleryObserver.observe(gallery);
+    }
+
+    if (prev) {
+      prev.addEventListener("click", function () {
+        showSlide(activeIndex - 1);
+        restartAutoSlide();
+      });
+    }
+
+    if (next) {
+      next.addEventListener("click", function () {
+        showSlide(activeIndex + 1);
+        restartAutoSlide();
+      });
+    }
+
+    track.addEventListener("touchstart", function (event) {
+      if (!event.touches || !event.touches.length) return;
+      stopAutoSlide();
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+
+    track.addEventListener("touchend", function (event) {
+      if (!event.changedTouches || !event.changedTouches.length) return;
+
+      var distanceX = event.changedTouches[0].clientX - touchStartX;
+      var distanceY = event.changedTouches[0].clientY - touchStartY;
+      var isHorizontalSwipe = Math.abs(distanceX) > 44 && Math.abs(distanceX) > Math.abs(distanceY) * 1.25;
+
+      if (!isHorizontalSwipe) {
+        restartAutoSlide(1600);
+        return;
+      }
+
+      showSlide(activeIndex + (distanceX < 0 ? 1 : -1));
+      restartAutoSlide(2200);
+    }, { passive: true });
+
+    window.addEventListener("scroll", function () {
+      stopAutoSlide();
+      if (resumeAutoSlideTimer) window.clearTimeout(resumeAutoSlideTimer);
+      resumeAutoSlideTimer = window.setTimeout(function () {
+        resumeAutoSlideTimer = null;
+        startAutoSlide();
+      }, 1200);
+    }, { passive: true });
+
+    startAutoSlide();
   }
 
   function ensureYouTubeMount() {
@@ -329,40 +453,6 @@
       var shouldShow = gift.style.display === "none" || !gift.style.display;
       gift.style.display = shouldShow ? "grid" : "none";
       if (shouldShow) gift.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  }
-
-  function setupScrollHints() {
-    var hints = document.querySelectorAll(".scroll-hint[href]");
-
-    hints.forEach(function (hint) {
-      var touchStartY = 0;
-      var isTouchScrolling = false;
-
-      hint.addEventListener("touchstart", function (event) {
-        if (!event.touches || !event.touches.length) return;
-        touchStartY = event.touches[0].clientY;
-        isTouchScrolling = false;
-      }, { passive: true });
-
-      hint.addEventListener("touchmove", function (event) {
-        if (!event.touches || !event.touches.length) return;
-        isTouchScrolling = Math.abs(event.touches[0].clientY - touchStartY) > 10;
-      }, { passive: true });
-
-      hint.addEventListener("click", function (event) {
-        var target = document.querySelector(hint.getAttribute("href"));
-
-        if (isTouchScrolling) {
-          event.preventDefault();
-          isTouchScrolling = false;
-          return;
-        }
-
-        if (!target) return;
-        event.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
     });
   }
 
@@ -585,6 +675,7 @@
   function setupSectionTransitions() {
     var animatedElements = document.querySelectorAll([
       ".reveal",
+      ".gallery-slide__frame",
       ".event-card",
       ".couple-card",
       ".story-list article",
@@ -633,7 +724,6 @@
     setupAudioButtons();
     setupBlockingModal();
     setupGiftToggle();
-    setupScrollHints();
     setupLocalComments();
     setupCountdowns();
   }
